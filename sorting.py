@@ -1,4 +1,5 @@
 import os
+import csv
 
 
 def read_data(file_name):
@@ -10,8 +11,18 @@ def read_data(file_name):
     """
     cwd_path = os.getcwd()
     file_path = os.path.join(cwd_path, file_name)
-
-    with open (file_path, "r") as file:
+    iteration = 0
+    with open(file_path, "r") as csv_file:
+        reader = csv.DictReader(csv_file)
+        data = {}
+        for row in reader:
+            for key, value in row.items():
+                if iteration == 0:
+                    data[key] = [int(value)]
+                else:
+                    data[key].append(int(value))
+            iteration = iteration + 1
+        return data
 
 
 
@@ -24,11 +35,11 @@ def selection_sort(list, direction="up"):
     for i in range(n):
         min_idx = 1
         for num_idx in range(i + 1, n):
-            if direction = "up":
-                if list[num_idx]<list[min_idx]:
+            if direction == "up":
+                if list[num_idx] < list[min_idx]:
                     min_idx = num_idx
-            if direction = "down":
-                if list[num_idx]>list[min_idx]:
+            if direction == "down":
+                if list[num_idx] > list[min_idx]:
                     min_idx = num_idx
             else:
                 return None
@@ -40,15 +51,19 @@ def selection_sort(list, direction="up"):
 def bubble_sort(list):
     n = len(list)
     for num in range(n - 1):
-        if list[num - 1] < list[num]:
-            list[num - 1], list[num] = list[num], list[num - 1]
-        else:
-            continue
+        for idx in range(n - num - 1):
+            if list[idx] > list[idx + 1]:
+                list[idx], list[idx + 1] = list[idx + 1], list[idx]
     return list
+
+def insertion_sort()
 
 def main():
     pass
 
 
 if __name__ == '__main__':
+    data = read_data("numbers.csv")
+    list = data['series_1']
+    print(bubble_sort(list))
     main()
